@@ -29,6 +29,14 @@ class Play extends Phaser.Scene {
         this.p1Rocket = new Rocket(this, game.config.width/2, 431,
                                     'rocket').setScale(0.5, 0.5).setOrigin(0, 0);
 
+        // add spaceship (3x)
+        this.ship01 = new Spaceship(this, this.game.config.width+192, 132,
+                                    'spaceship', 0, 30).setOrigin(0, 0);
+        this.ship02 = new Spaceship(this, this.game.config.width+96, 196,
+                                    'spaceship', 0, 20).setOrigin(0, 0);
+        this.ship03 = new Spaceship(this, this.game.config.width, 260,
+                                    'spaceship', 10, 30).setOrigin(0, 0);
+
         // define keyboard keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -41,5 +49,9 @@ class Play extends Phaser.Scene {
 
         // update rocket
         this.p1Rocket.update();
+        // update spaceship
+        this.ship01.update();
+        this.ship02.update();
+        this.ship03.update();
     }
 }

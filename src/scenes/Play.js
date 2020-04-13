@@ -51,9 +51,9 @@ class Play extends Phaser.Scene {
         this.gameOver = false;
         // 60-second play clock
         scoreConfig.fixedWidth = 0;
-        this.clock = this.time.delayedCall(10000, () => {
+        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, '(F)ire to Restart', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, '(F)ire to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);
 
@@ -89,6 +89,10 @@ class Play extends Phaser.Scene {
         // check input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyF)) {
             this.scene.restart(this.p1Score);
+        }
+        // check input for menu
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.scene.start("menuScene");
         }
 
         // scroll starfield
@@ -132,6 +136,7 @@ class Play extends Phaser.Scene {
     }
 
     shipExplode(ship) {
+        this.sound.play('sfx_explosion');       // play explosion sfx
         ship.alpha = 0;                         // temporarily hide ship
 
         // create explosion sprite at ship's position
